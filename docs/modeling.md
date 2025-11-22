@@ -67,7 +67,7 @@
 
      - タスクを完了したら、ステータスを completed に変更できる
 
-- ユースケース一覧
+- ざっくりユースケース一覧
   - todo の CRUD
     - Create
     - Read
@@ -159,15 +159,15 @@
 
     ```go
     type Todo struct {
-      id: TodoId // VO: 型安全のため
-      title: Title // VO: 文字数バリデーションのため
-      description: *string
-      status: Status // VO: ロジックを持たせるため(ステータス変更)
-      deadline: *Deadline // VO: 現在以降バリデーションのため
-      priority: *Priority // VO: Enumバリデーションのため
-      userId: UserId // VO: 型安全のため
-      createdAt: time.time
-      updatedAt: time.time
+      ID: TodoId // VO: 型安全のため
+      Title: Title // VO: 文字数バリデーションのため
+      Description: *string
+      Status: Status // VO: ロジックを持たせるため(ステータス変更)
+      Deadline: *Deadline // VO: 現在以降バリデーションのため
+      Priority: *Priority // VO: Enumバリデーションのため
+      UserId: UserId // VO: 型安全のため
+      CreatedAt: time.time
+      UpdatedAt: time.time
     }
     ```
 
@@ -175,12 +175,12 @@
 
     ```go
     type User struct {
-    	id: UserId // VO: 型安全のため
-    	name: UserName // VO: 文字数バリデーションのため
-        email: Email // VO: メールアドレス形式バリデーションのため
-        paasword: Password // VO: ハッシュ化のため
-        createdAt   time.Time
-        updatedAt   time.Time
+    	ID: UserId // VO: 型安全のため
+    	Name: Name // VO: 文字数バリデーションのため
+      Email: Email // VO: メールアドレス形式バリデーションのため
+      Paasword: Password // VO: ハッシュ化のため
+      CreatedAt: time.time
+      UpdatedAt: time.time
     }
     ```
 
@@ -189,32 +189,44 @@
 - todo(タスク): やるべきこと
 - status(ステータス): todo の進捗状況。waiting / doing / completed
 - user(ユーザー): todo を登録・編集する人
+- start(開始): todo のステータスを waiting から doing に進める
+- complete(完了): todo のステータスを doing から completed に進める
+- suspend(中断): todo のステータスを doing から waiting に戻す
+- reopen(再開): todo のステータスを completed から doing に戻す
 
 ### 振る舞いをモデル化
 
 - Todo
-  固有の不変条件：なし(VO の制約のみ)
-  - ChangeTitle
-    - 入力：Title
-    - 制約：Title が Valid(~64 文字)
-  - ChangeDeadline
-    - 入力：Deadline
-    - 制約：null 許容。Deadline が Valid(今日以降)
-  - ChangePriority
-    - 入力：Priority
-    - 制約：null 許容。Priority が Valid(高、中、低のいずれか)
-  - ChangeStatus
-    - 入力：Status
-    - 制約：Status が Valid(waiting / doing / completed のいずれか)
+
+  - 固有の不変条件
+
+    - ChangeStatus
+      - 入力：Status
+      - 制約：waiting から complete および complete から waiting のステータス変更を禁じる
+
+  - VO の制約条件
+    - NewTitle
+      - 入力：Title
+      - 制約：Title が Valid(~64 文字)
+    - NewDeadline
+      - 入力：Deadline
+      - 制約：null 許容。Deadline が Valid(今日以降)
+    - NewPriority
+      - 入力：Priority
+      - 制約：null 許容。Priority が Valid(高、中、低のいずれか)
+    - NewStatus
+      - 入力：Status
+      - 制約：Status が Valid(waiting / doing / completed のいずれか)
+
 - User
   固有の不変条件：なし(VO の制約のみ)
-  - ChangeName
-    - 入力：UserName
-    - 制約：UserName が Valid(~64 文字)
-  - ChangeEmail
+  - NewName
+    - 入力：Name
+    - 制約：Name が Valid(~64 文字)
+  - NewEmail
     - 入力：Email
     - 制約：Email が Valid(Email 形式である)
-  - ChangePassword
+  - NewPassword
     - 入力：Password
     - 制約：Password が Valid(~16 文字)
       - ハッシュ化は VO 内で行う
