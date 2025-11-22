@@ -1,7 +1,6 @@
-.PHONY: help build up down restart logs clean dev
 
-help: ## Show this help
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+include backend/.env
+export
 
 build: ## Build all services
 	docker-compose build
@@ -38,6 +37,26 @@ rebuild: ## Rebuild and restart all services
 	$(MAKE) down
 	$(MAKE) build
 	$(MAKE) up
+
+backend-generate:
+	cd backend && gqlgen generate
+
+# Migration commands
+migrate-create: ## Create new migration file (usage: make migrate-create name=create_users)
+	cd backend && migrate create -ext sql -dir db/migrations -seq $(name)
+
+migrate-up: ## Run all up migrations
+	cd backend && migrate -path db/migrations -database "mysql://$(DB_USER):$(DB_PASSWORD)@tcp($(DB_HOST):$(DB_PORT))/$(DB_NAME)" up
+
+migrate-down: ## Run one down migration
+	cd backend && migrate -path db/migrations -database "mysql://$(DB_USER):$(DB_PASSWORD)@tcp($(DB_HOST):$(DB_PORT))/$(DB_NAME)" down 1
+
+migrate-force: ## Force migration version (usage: make migrate-force version=1)
+	cd backend && migrate -path db/migrations -database "mysql://$(DB_USER):$(DB_PASSWORD)@tcp($(DB_HOST):$(DB_PORT))/$(DB_NAME)" force $(version)
+
+# GORM Gen commands
+db-generate: ## Generate GORM models from database
+	cd backend && go run db/generator/main.go
 
 backend-shell: ## Open shell in backend container
 	docker-compose exec backend sh
