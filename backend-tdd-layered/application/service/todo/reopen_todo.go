@@ -13,7 +13,7 @@ func (s *TodoService) ReopenTodo(ctx context.Context, todoID string) (bool, erro
 		return false, err
 	}
 
-	dTodo, err := s.Repository.TodoRepository.FindByID(ctx, dTodoID)
+	dTodo, err := s.repo.TodoRepository.FindByID(ctx, dTodoID)
 	if err != nil {
 		return false, err
 	}
@@ -23,7 +23,7 @@ func (s *TodoService) ReopenTodo(ctx context.Context, todoID string) (bool, erro
 
 	dTodo.UpdateStatus(vo.StatusDoing)
 
-	err = s.Repository.TodoRepository.Save(ctx, dTodo)
+	err = s.repo.TodoRepository.Save(ctx, dTodo)
 	if err != nil {
 		return false, err
 	}

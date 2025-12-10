@@ -37,8 +37,8 @@ const (
 type SortDirection string
 
 const (
-	SortAsc  SortDirection = "asc"
-	SortDesc SortDirection = "desc"
+	SortAsc  SortDirection = "ASC"
+	SortDesc SortDirection = "DESC"
 )
 
 type Paging struct {

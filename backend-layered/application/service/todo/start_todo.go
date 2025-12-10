@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"github.com/ddd-todo/project-backend/domain/derr"
 	"github.com/ddd-todo/project-backend/domain/dmodel/vo"
 )
 
@@ -15,6 +16,9 @@ func (s *TodoService) StartTodo(ctx context.Context, todoID string) (bool, error
 	dTodo, err := s.Repository.TodoRepository.FindByID(ctx, dTodoID)
 	if err != nil {
 		return false, err
+	}
+	if dTodo == nil {
+		return false, derr.ErrTodoNotFound
 	}
 
 	dTodo.UpdateStatus(vo.StatusDoing)

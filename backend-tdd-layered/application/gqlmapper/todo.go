@@ -91,13 +91,15 @@ func ToAggTodo(m *graphmodel.Todo) (*agg.Todo, error) {
 		priority = &p
 	}
 
-	return agg.NewTodo(
+	todo := agg.NewTodo(
 		vo.TodoID(m.ID),
 		vo.Title(m.Title),
 		m.Description,
 		vo.Status(m.Status),
-		deadline,
 		priority,
+		deadline,
 		vo.UserID(m.UserID),
-	), nil
+	)
+
+	return &todo, nil
 }

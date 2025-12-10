@@ -14,10 +14,10 @@
 
 query 系
 
-| ユースケース  | 入力例         | 出力例 | 備考 |
-| ------------- | -------------- | ------ | ---- |
-| ListTodos     | userID, filter | []Todo |      |
-| GetTodoDetail | todoID         | Todo   |      |
+| ユースケース  | 入力例                    | 出力例 | 備考 |
+| ------------- | ------------------------- | ------ | ---- |
+| ListTodos     | userID, filter, pageInput | []Todo |      |
+| GetTodoDetail | todoID                    | Todo   |      |
 
 command 系
 

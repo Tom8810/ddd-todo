@@ -12,4 +12,5 @@ var (
 	ErrInvalidStatusTransition    = errors.New("invalid status transition")
 	ErrInvalidTodoFitlerDateRange = errors.New("invalid todo filter date range")
 	ErrInvalidTodoSortField       = errors.New("invalid todo sort field")
+	ErrTodoNotFound               = errors.New("todo not found")
 )
