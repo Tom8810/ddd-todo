@@ -14,7 +14,7 @@ func (s *TodoService) UpdateTodoDetail(ctx context.Context, input graphmodel.Tod
 		return false, err
 	}
 
-	dTodo, err := s.Repository.TodoRepository.FindByID(ctx, dTodoID)
+	dTodo, err := s.repo.TodoRepository.FindByID(ctx, dTodoID)
 	if err != nil {
 		return false, err
 	}
@@ -50,7 +50,7 @@ func (s *TodoService) UpdateTodoDetail(ctx context.Context, input graphmodel.Tod
 		dTodo.UpdatePriority(&dPriority)
 	}
 
-	err = s.Repository.TodoRepository.Save(ctx, dTodo)
+	err = s.repo.TodoRepository.Save(ctx, dTodo)
 	if err != nil {
 		return false, err
 	}

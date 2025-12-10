@@ -23,5 +23,9 @@ func (r *todoRepositoryMock) Save(ctx context.Context, todo *agg.Todo) error {
 		return fmt.Errorf("mocked error in Save")
 	}
 
+	if todo.ID.Value() == "d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f90" {
+		return fmt.Errorf("mocked error in Save")
+	}
+
 	return nil
 }
