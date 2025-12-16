@@ -16,6 +16,9 @@ func ToDBUser(a *agg.User) *model.User {
 }
 
 func ToAggUser(m *model.User) (*agg.User, error) {
+	if m == nil {
+		return nil, nil
+	}
 	return agg.ReconstructUser(
 		vo.UserID(m.ID),
 		vo.Name(m.Name),

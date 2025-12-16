@@ -1,11 +1,14 @@
 package lib
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"github.com/ddd-todo/project-backend/domain/dmodel/vo"
+	"golang.org/x/crypto/bcrypt"
+)
 
-func HashPassword(password string) (string, error) {
+func HashPassword(password vo.Password) (vo.Password, error) {
 	hashedBytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err
 	}
-	return string(hashedBytes), nil
+	return vo.NewHashedPassword(string(hashedBytes)), nil
 }

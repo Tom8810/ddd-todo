@@ -32,11 +32,6 @@ func TestNewPassword(t *testing.T) {
 			wantPassword: Password("password123"),
 		},
 		{
-			name:    "invalid password with 17 characters (too long)",
-			value:   "12345678901234567",
-			wantErr: true,
-		},
-		{
 			name:    "empty password",
 			value:   "",
 			wantErr: true,

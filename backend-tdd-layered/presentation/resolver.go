@@ -1,13 +1,13 @@
 package presentation
 
-// import "github.com/ddd-todo/project-backend/application/service"
+import "github.com/ddd-todo/project-backend/application/service"
 
 type Resolver struct {
-	// sevice *service.Services
+	sevice *service.Services
 }
 
-func NewResolver() *Resolver {
+func NewResolver(services *service.Services) *Resolver {
 	return &Resolver{
-		// sevice: services,
+		sevice: services,
 	}
 }

@@ -19,7 +19,7 @@ func (s *UserService) Login(ctx context.Context, input graphmodel.LoginInput) (*
 		return &graphmodel.LoginResponse{}, err
 	}
 
-	dUser, err := s.Repository.UserRepository.FindByEmail(ctx, emailVO)
+	dUser, err := s.repo.UserRepository.FindByEmail(ctx, emailVO)
 	if err != nil {
 		return &graphmodel.LoginResponse{}, err
 	}

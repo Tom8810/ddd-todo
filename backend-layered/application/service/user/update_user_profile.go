@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"github.com/ddd-todo/project-backend/domain/derr"
 	"github.com/ddd-todo/project-backend/domain/dmodel/vo"
 )
 
@@ -18,6 +19,9 @@ func (s *UserService) UpdateUserProfile(ctx context.Context, userID string, name
 	user, err := s.Repository.UserRepository.FindByID(ctx, dID)
 	if err != nil {
 		return false, err
+	}
+	if user == nil {
+		return false, derr.ErrUserNotFound
 	}
 
 	user.UpdateName(dName)

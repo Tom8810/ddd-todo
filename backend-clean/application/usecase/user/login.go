@@ -6,6 +6,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/ddd-todo/project-backend/application/usecase/user/dto"
+	"github.com/ddd-todo/project-backend/domain/derr"
 	"github.com/ddd-todo/project-backend/domain/dmodel/agg"
 	"github.com/ddd-todo/project-backend/domain/dmodel/vo"
 	domainport "github.com/ddd-todo/project-backend/port/domainport/user"
@@ -21,9 +22,12 @@ func (s *UserUsecase) Login(ctx context.Context, input dto.LoginInput) (dto.Logi
 	if err != nil {
 		return dto.LoginOutput{}, err
 	}
+	if dUser == nil {
+		return dto.LoginOutput{}, derr.ErrUserNotFound
+	}
 
 	if !s.verifyPassword(dUser, input.Password) {
-		return dto.LoginOutput{}, err
+		return dto.LoginOutput{}, derr.ErrInvalidPassword
 	}
 
 	token, err := s.AuthService.GenerateToken(dUser.ID.Value(), dUser.Email.Value())

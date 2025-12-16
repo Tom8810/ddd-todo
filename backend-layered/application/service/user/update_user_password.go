@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"github.com/ddd-todo/project-backend/domain/derr"
 	"github.com/ddd-todo/project-backend/domain/dmodel/vo"
 	"github.com/ddd-todo/project-backend/internal/lib"
 )
@@ -12,11 +13,11 @@ func (s *UserService) UpdateUserPassword(ctx context.Context, userID string, pas
 	if err != nil {
 		return false, err
 	}
-	hashedPassword, err := lib.HashPassword(password)
+	dPassword, err := vo.NewPassword(password)
 	if err != nil {
 		return false, err
 	}
-	dPassword, err := vo.NewPassword(hashedPassword)
+	hashedDPassword, err := lib.HashPassword(dPassword)
 	if err != nil {
 		return false, err
 	}
@@ -24,8 +25,11 @@ func (s *UserService) UpdateUserPassword(ctx context.Context, userID string, pas
 	if err != nil {
 		return false, err
 	}
+	if user == nil {
+		return false, derr.ErrUserNotFound
+	}
 
-	user.UpdatePassword(dPassword)
+	user.UpdatePassword(hashedDPassword)
 
 	err = s.Repository.UserRepository.Save(ctx, user)
 	if err != nil {

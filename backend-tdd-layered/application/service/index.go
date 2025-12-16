@@ -3,6 +3,7 @@ package service
 import (
 	t "github.com/ddd-todo/project-backend/application/service/todo"
 	u "github.com/ddd-todo/project-backend/application/service/user"
+	"github.com/ddd-todo/project-backend/infrastructure/repository"
 )
 
 type Services struct {
@@ -10,9 +11,11 @@ type Services struct {
 	UserService *u.UserService
 }
 
-func NewServices(userService *u.UserService, todoService *t.TodoService) *Services {
+func NewServices(
+	repo *repository.Repositories,
+) *Services {
 	return &Services{
-		TodoService: todoService,
-		UserService: userService,
+		TodoService: t.NewTodoService(repo),
+		UserService: u.NewUserService(repo),
 	}
 }

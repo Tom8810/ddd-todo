@@ -16,7 +16,7 @@ func (s *UserService) UpdateUserEmail(ctx context.Context, userID string, email 
 	if err != nil {
 		return false, err
 	}
-	user, err := s.Repository.UserRepository.FindByID(ctx, dID)
+	user, err := s.repo.UserRepository.FindByID(ctx, dID)
 	if err != nil {
 		return false, err
 	}
@@ -26,7 +26,7 @@ func (s *UserService) UpdateUserEmail(ctx context.Context, userID string, email 
 
 	user.UpdateEmail(dEmail)
 
-	err = s.Repository.UserRepository.Save(ctx, user)
+	err = s.repo.UserRepository.Save(ctx, user)
 	if err != nil {
 		return false, err
 	}

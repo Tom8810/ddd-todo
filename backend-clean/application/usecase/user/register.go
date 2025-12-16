@@ -26,16 +26,16 @@ func (s *UserUsecase) Register(ctx context.Context, input dto.RegisterInput) (bo
 		return false, err
 	}
 
-	hashedPassword, err := lib.HashPassword(input.Password)
+	dPassword, err := vo.NewPassword(input.Password)
 	if err != nil {
 		return false, err
 	}
-	dPassword, err := vo.NewPassword(hashedPassword)
+	hashedDPassword, err := lib.HashPassword(dPassword)
 	if err != nil {
 		return false, err
 	}
 
-	dUser := agg.NewUser(dID, dName, dEmail, dPassword)
+	dUser := agg.NewUser(dID, dName, dEmail, hashedDPassword)
 
 	err = s.Repository.UserRepository.Save(ctx, dUser)
 	if err != nil {

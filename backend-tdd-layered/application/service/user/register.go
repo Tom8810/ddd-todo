@@ -37,7 +37,7 @@ func (s *UserService) Register(ctx context.Context, input graphmodel.UserCreateI
 
 	dUser := agg.NewUser(dID, dName, dEmail, hashedDPassword)
 
-	err = s.Repository.UserRepository.Save(ctx, dUser)
+	err = s.repo.UserRepository.Save(ctx, dUser)
 	if err != nil {
 		return false, err
 	}

@@ -15,6 +15,10 @@ func NewPassword(value string) (Password, error) {
 	return Password(value), nil
 }
 
+func NewHashedPassword(value string) Password {
+	return Password(value)
+}
+
 // Getter
 func (p Password) Value() string {
 	return string(p)

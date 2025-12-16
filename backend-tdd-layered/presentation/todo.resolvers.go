@@ -14,47 +14,47 @@ import (
 
 // Create is the resolver for the Create field.
 func (r *todoMutationResolver) Create(ctx context.Context, obj *graphmodel.TodoMutation, input graphmodel.TodoCreateInput) (bool, error) {
-	return false, nil
+	return r.sevice.TodoService.CreateTodo(ctx, input)
 }
 
 // Update is the resolver for the Update field.
 func (r *todoMutationResolver) Update(ctx context.Context, obj *graphmodel.TodoMutation, input graphmodel.TodoUpdateInput) (bool, error) {
-	return false, nil
+	return r.sevice.TodoService.UpdateTodoDetail(ctx, input)
 }
 
 // Delete is the resolver for the Delete field.
 func (r *todoMutationResolver) Delete(ctx context.Context, obj *graphmodel.TodoMutation, id string) (bool, error) {
-	return false, nil
+	return r.sevice.TodoService.DeleteTodo(ctx, id)
 }
 
 // Start is the resolver for the Start field.
 func (r *todoMutationResolver) Start(ctx context.Context, obj *graphmodel.TodoMutation, id string) (bool, error) {
-	return false, nil
+	return r.sevice.TodoService.StartTodo(ctx, id)
 }
 
 // Suspend is the resolver for the Suspend field.
 func (r *todoMutationResolver) Suspend(ctx context.Context, obj *graphmodel.TodoMutation, id string) (bool, error) {
-	return false, nil
+	return r.sevice.TodoService.SuspendTodo(ctx, id)
 }
 
 // Complete is the resolver for the Complete field.
 func (r *todoMutationResolver) Complete(ctx context.Context, obj *graphmodel.TodoMutation, id string) (bool, error) {
-	return false, nil
+	return r.sevice.TodoService.CompleteTodo(ctx, id)
 }
 
 // Reopen is the resolver for the Reopen field.
 func (r *todoMutationResolver) Reopen(ctx context.Context, obj *graphmodel.TodoMutation, id string) (bool, error) {
-	return false, nil
+	return r.sevice.TodoService.ReopenTodo(ctx, id)
 }
 
 // GetByID is the resolver for the GetByID field.
 func (r *todoQueryResolver) GetByID(ctx context.Context, obj *graphmodel.TodoQuery, id string) (*graphmodel.Todo, error) {
-	return nil, nil
+	return r.sevice.TodoService.GetTodoDetail(ctx, id)
 }
 
 // List is the resolver for the List field.
 func (r *todoQueryResolver) List(ctx context.Context, obj *graphmodel.TodoQuery, filter graphmodel.TodoFilter, pageInput graphmodel.PageInput) (*graphmodel.TodoConnection, error) {
-	return nil, nil
+	return r.sevice.TodoService.ListTodos(ctx, filter, pageInput)
 }
 
 // TodoMutation returns graph.TodoMutationResolver implementation.

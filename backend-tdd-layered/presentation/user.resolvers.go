@@ -14,37 +14,37 @@ import (
 
 // Create is the resolver for the Create field.
 func (r *userMutationResolver) Create(ctx context.Context, obj *graphmodel.UserMutation, input graphmodel.UserCreateInput) (bool, error) {
-	return false, nil
+	return r.sevice.UserService.Register(ctx, input)
 }
 
 // Login is the resolver for the Login field.
 func (r *userMutationResolver) Login(ctx context.Context, obj *graphmodel.UserMutation, input graphmodel.LoginInput) (*graphmodel.LoginResponse, error) {
-	return nil, nil
+	return r.sevice.UserService.Login(ctx, input)
 }
 
 // Delete is the resolver for the Delete field.
 func (r *userMutationResolver) Delete(ctx context.Context, obj *graphmodel.UserMutation, id string) (bool, error) {
-	return false, nil
+	return r.sevice.UserService.DeleteUser(ctx, id)
 }
 
 // UpdateUserProfile is the resolver for the UpdateUserProfile field.
 func (r *userMutationResolver) UpdateUserProfile(ctx context.Context, obj *graphmodel.UserMutation, id string, name string) (bool, error) {
-	return false, nil
+	return r.sevice.UserService.UpdateUserProfile(ctx, id, name)
 }
 
 // UpdateUserEmail is the resolver for the UpdateUserEmail field.
 func (r *userMutationResolver) UpdateUserEmail(ctx context.Context, obj *graphmodel.UserMutation, id string, email string) (bool, error) {
-	return false, nil
+	return r.sevice.UserService.UpdateUserEmail(ctx, id, email)
 }
 
 // UpdateUserPassword is the resolver for the UpdateUserPassword field.
 func (r *userMutationResolver) UpdateUserPassword(ctx context.Context, obj *graphmodel.UserMutation, id string, password string) (bool, error) {
-	return false, nil
+	return r.sevice.UserService.UpdateUserPassword(ctx, id, password)
 }
 
 // GetByID is the resolver for the GetByID field.
 func (r *userQueryResolver) GetByID(ctx context.Context, obj *graphmodel.UserQuery, id string) (*graphmodel.User, error) {
-	return nil, nil
+	return r.sevice.UserService.GetUserByID(ctx, id)
 }
 
 // UserMutation returns graph.UserMutationResolver implementation.
