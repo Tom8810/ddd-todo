@@ -1,0 +1,39 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input UserCreateInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginResponse {
+  token: String!
+  user: User!
+}
+
+type UserQuery {
+  GetByID(id: ID!): User @goField(forceResolver: true)
+}
+
+type UserMutation {
+  Create(input: UserCreateInput!): Boolean! @goField(forceResolver: true)
+  Login(input: LoginInput!): LoginResponse! @goField(forceResolver: true)
+  Delete(id: ID!): Boolean! @goField(forceResolver: true)
+  UpdateUserProfile(id: ID!, name: String!): Boolean!
+    @goField(forceResolver: true)
+  UpdateUserEmail(id: ID!, email: String!): Boolean!
+    @goField(forceResolver: true)
+  UpdateUserPassword(id: ID!, password: String!): Boolean!
+    @goField(forceResolver: true)
+}

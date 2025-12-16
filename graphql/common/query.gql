@@ -1,0 +1,19 @@
+input PageInput {
+  limit: Int!
+  offset: Int!
+  sortKey: String
+  sortDirection: SortDirection!
+}
+
+enum SortDirection {
+  ASC
+  DESC
+}
+
+type PagingInfo {
+  totalCount: Int!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  offset: Int!
+  limit: Int!
+}

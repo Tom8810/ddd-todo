@@ -1,0 +1,57 @@
+type Todo {
+  id: ID!
+  title: String!
+  description: String
+  status: String!
+  deadline: DateTime
+  priority: String
+  userId: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type TodoConnection {
+  items: [Todo!]!
+  pagingInfo: PagingInfo!
+}
+
+input TodoCreateInput {
+  title: String!
+  description: String
+  deadline: DateTime
+  priority: String
+  userId: ID!
+}
+
+input TodoUpdateInput {
+  id: ID!
+  title: String
+  description: String
+  deadline: DateTime
+  priority: String
+}
+
+input TodoFilter {
+  keyword: String
+  status: String
+  priority: String
+  deadlineBefore: DateTime
+  deadlineAfter: DateTime
+  userId: ID
+}
+
+type TodoQuery {
+  GetByID(id: ID!): Todo @goField(forceResolver: true)
+  List(filter: TodoFilter!, pageInput: PageInput!): TodoConnection!
+    @goField(forceResolver: true)
+}
+
+type TodoMutation {
+  Create(input: TodoCreateInput!): Boolean! @goField(forceResolver: true)
+  Update(input: TodoUpdateInput!): Boolean! @goField(forceResolver: true)
+  Delete(id: ID!): Boolean! @goField(forceResolver: true)
+  Start(id: ID!): Boolean! @goField(forceResolver: true)
+  Suspend(id: ID!): Boolean! @goField(forceResolver: true)
+  Complete(id: ID!): Boolean! @goField(forceResolver: true)
+  Reopen(id: ID!): Boolean! @goField(forceResolver: true)
+}

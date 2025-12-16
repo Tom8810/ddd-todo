@@ -1,0 +1,21 @@
+directive @goField(
+  forceResolver: Boolean
+  name: String
+) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+scalar DateTime
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  TodoQuery: TodoQuery @goField(forceResolver: true)
+  UserQuery: UserQuery @goField(forceResolver: true)
+}
+
+type Mutation {
+  TodoMutation: TodoMutation! @goField(forceResolver: true)
+  UserMutation: UserMutation! @goField(forceResolver: true)
+}
